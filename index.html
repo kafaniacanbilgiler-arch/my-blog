@@ -1,4 +1,3 @@
-<!-- FILE: index.html -->
 <!doctype html>
 <html lang="tr">
 <head>
@@ -8,13 +7,9 @@
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <div class="bg">
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-    <div class="blob b3"></div>
-  </div>
+  <canvas id="bgCanvas"></canvas>
 
-  <header class="site-header">
+  <header class="site-header fade-in">
     <h1 class="brand animate-glow">STRYNEX</h1>
     <nav class="nav">
       <a href="#" class="active">Ana Sayfa</a>
@@ -24,7 +19,7 @@
     </nav>
   </header>
 
-  <main class="container">
+  <main class="container fade-in-delay">
     <section class="intro">
       <h2>Disiplin, Güç, İlerleme.</h2>
       <p>Strynex, her seviyeden sporcu için motivasyon, bilgi ve enerji kaynağıdır.  
@@ -46,9 +41,14 @@
     </section>
   </main>
 
-  <footer class="site-footer" id="contact">
+  <footer class="site-footer fade-in-delay" id="contact">
     <p>© 2025 Strynex | Fitness & Motivasyon Blog</p>
   </footer>
+
+  <button id="musicBtn" class="music-btn">🎵 Play</button>
+  <audio id="bgMusic" loop>
+    <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Komiku/Time_for_Adventure/Komiku_-_07_-_Friends.mp3" type="audio/mpeg">
+  </audio>
 
 <script src="js/main.js"></script>
 </body>
