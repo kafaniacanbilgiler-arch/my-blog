@@ -1,10 +1,9 @@
 :root {
-  --text: #f0f0ff;
-  --muted: #a6a9b9;
-  --accent: #ff4d6d;
-  --bg1: #090b24;
-  --bg2: #280b45;
-  --bg3: #5a0b18;
+  --bg-dark: #050509;
+  --neon-blue: #00d4ff;
+  --neon-purple: #6a00ff;
+  --text-light: #d6eaff;
+  --muted: #8096b1;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -12,49 +11,52 @@ html, body { height: 100%; overflow-x: hidden; }
 
 body {
   font-family: "Poppins", system-ui, sans-serif;
-  color: var(--text);
-  background: linear-gradient(-45deg, var(--bg1), var(--bg2), var(--bg3));
-  background-size: 400% 400%;
-  animation: bgShift 15s ease infinite;
+  background: radial-gradient(circle at 50% 30%, #0b0b16, #010104);
+  color: var(--text-light);
+  min-height: 100vh;
+  position: relative;
 }
 
-@keyframes bgShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* 3D Canvas arka plan */
-#bgCanvas {
+/* Arka plan enerji efekti */
+.energy-bg {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: repeating-linear-gradient(
+    60deg,
+    rgba(0, 255, 255, 0.05) 0,
+    rgba(0, 255, 255, 0.05) 2px,
+    transparent 3px,
+    transparent 6px
+  );
+  filter: blur(1px);
+  animation: scan 12s linear infinite;
   z-index: 0;
-  background: transparent;
+}
+@keyframes scan {
+  from { background-position: 0 0; }
+  to { background-position: 100% 100%; }
 }
 
 /* Header */
 .site-header {
   position: relative;
   text-align: center;
-  padding: 50px 20px 20px;
+  padding: 60px 20px 20px;
   z-index: 2;
 }
 .brand {
-  font-size: 3.2rem;
-  font-weight: 900;
+  font-size: 3rem;
   letter-spacing: 6px;
-  background: linear-gradient(90deg, #9fb7ff, #ff86b0, #ffa0a6);
-  -webkit-background-clip: text;
-  color: transparent;
+  color: var(--neon-blue);
+  text-shadow:
+    0 0 8px var(--neon-blue),
+    0 0 20px var(--neon-purple),
+    0 0 40px var(--neon-blue);
+  animation: pulseGlow 2s ease-in-out infinite alternate;
 }
-.animate-glow {
-  animation: glow 2s ease-in-out infinite alternate;
-}
-@keyframes glow {
-  from { text-shadow: 0 0 10px #ff4d6d, 0 0 30px #ff4d6d; }
-  to { text-shadow: 0 0 30px #9fb7ff, 0 0 60px #ff86b0; }
+@keyframes pulseGlow {
+  from { text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-purple); }
+  to { text-shadow: 0 0 25px var(--neon-blue), 0 0 60px var(--neon-purple); }
 }
 
 .nav {
@@ -70,48 +72,67 @@ body {
   transition: all 0.3s ease;
 }
 .nav a:hover, .nav a.active {
-  color: #fff;
-  transform: translateY(-2px);
+  color: var(--neon-blue);
+  text-shadow: 0 0 10px var(--neon-blue);
 }
 
-/* İçerik */
-.container {
+/* Panel stili (Solo Leveling UI kutuları) */
+.panel {
   position: relative;
   z-index: 2;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 20px;
-  text-align: center;
+  background: rgba(20, 20, 30, 0.35);
+  border: 2px solid rgba(0, 200, 255, 0.2);
+  box-shadow:
+    0 0 15px rgba(0, 200, 255, 0.3) inset,
+    0 0 30px rgba(0, 200, 255, 0.1);
+  border-radius: 12px;
+  padding: 30px;
+  margin: 40px auto;
+  max-width: 700px;
+  backdrop-filter: blur(5px);
+  animation: floatUp 1s ease forwards;
+}
+@keyframes floatUp {
+  from { opacity: 0; transform: translateY(40px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-.intro h2 { font-size: 2rem; margin-bottom: 10px; }
-.intro p { color: var(--muted); line-height: 1.6; max-width: 600px; margin: 0 auto; }
+.intro h2 {
+  font-size: 1.5rem;
+  color: var(--neon-blue);
+  margin-bottom: 15px;
+  text-shadow: 0 0 10px var(--neon-blue);
+}
+.intro p {
+  color: var(--muted);
+  line-height: 1.6;
+}
 
-.recent { margin-top: 60px; }
-.section-title { font-size: 1.6rem; margin-bottom: 20px; }
-
+/* Scroll listesi */
 .scroll-box {
   height: 150px;
   overflow: hidden;
-  max-width: 500px;
-  margin: 0 auto;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.05);
-  box-shadow: 0 0 25px rgba(0,0,0,0.4) inset;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 0 20px rgba(0,255,255,0.15);
 }
 .scroll-content {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  animation: scrollUp 15s linear infinite;
+  animation: scrollUp 18s linear infinite;
 }
 .scroll-content a {
-  color: #fff;
+  color: var(--text-light);
   text-decoration: none;
   font-weight: 600;
-  padding: 8px 10px;
+  padding: 8px 12px;
+  transition: color 0.2s;
 }
-.scroll-content a:hover { color: var(--accent); }
+.scroll-content a:hover {
+  color: var(--neon-blue);
+  text-shadow: 0 0 10px var(--neon-blue);
+}
 @keyframes scrollUp {
   0% { transform: translateY(0); }
   100% { transform: translateY(-50%); }
@@ -119,43 +140,21 @@ body {
 
 /* Footer */
 .site-footer {
-  position: relative;
   text-align: center;
-  z-index: 2;
   color: var(--muted);
-  margin-top: 60px;
-  padding: 20px;
+  font-size: 14px;
+  margin: 60px 0 20px;
 }
 
-/* Giriş efektleri */
+/* Fade efektleri */
 .fade-in {
   opacity: 0;
-  animation: fadeIn 2s forwards;
+  animation: fadeIn 1.2s forwards;
 }
 .fade-in-delay {
   opacity: 0;
-  animation: fadeIn 2s 1s forwards;
+  animation: fadeIn 1.2s 0.5s forwards;
 }
 @keyframes fadeIn {
   to { opacity: 1; transform: translateY(0); }
-}
-
-/* Müzik butonu */
-.music-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 3;
-  padding: 10px 18px;
-  font-size: 18px;
-  border: none;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.1);
-  color: white;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.music-btn:hover {
-  background: rgba(255,255,255,0.25);
-  transform: scale(1.1);
 }
